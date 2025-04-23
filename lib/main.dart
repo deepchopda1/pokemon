@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       getPages: AppRoutes.routes,
-      initialRoute: AppRoutes.pokemonListScreen,
+      initialRoute: AppRoutes.bottomTabBar,
     );
   }
 }

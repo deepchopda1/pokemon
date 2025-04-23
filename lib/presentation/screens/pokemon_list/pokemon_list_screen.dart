@@ -1,56 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pokemon/presentation/app/app_routes.dart';
 
 import 'controller/pokemon_list_controller.dart';
-
-// class PokemonListScreen extends StatefulWidget {
-//   const PokemonListScreen({super.key});
-//
-//   @override
-//   State<PokemonListScreen> createState() => _PokemonListScreenState();
-// }
-//
-// class _PokemonListScreenState extends State<PokemonListScreen> {
-//   PokemonListController controller = Get.put(PokemonListController());
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text(
-//           "Pokemon",
-//           style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
-//         ),
-//       ),
-//       body: ListView.separated(
-//         itemCount: controller.pokemonList.value!.results!.length,
-//         separatorBuilder: (context, index) {
-//           return Divider();
-//         },
-//         itemBuilder: (context, index) {
-//           final data = controller.pokemonList.value!.results![index];
-//           return Column(
-//             children: [
-//               ListTile(
-//                 title: Text(
-//                   "${data.name}",
-//                 ),
-//                 titleTextStyle: TextStyle(
-//                   fontWeight: FontWeight.w500,
-//                   fontSize: 18,
-//                   color: Colors.black,
-//                 ),
-//                 trailing: Icon(
-//                   Icons.arrow_forward_ios_outlined,
-//                   size: 15,
-//                 ),
-//               ),
-//             ],
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
 
 class PokemonListScreen extends StatefulWidget {
   const PokemonListScreen({super.key});
@@ -114,9 +66,18 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
                         : SizedBox();
                   }
                   final data = controller.allPokemon[index];
+                  final pokemonId = data.url!.split("/")[6];
+
                   return Column(
                     children: [
                       ListTile(
+                        onTap: () => Get.toNamed(AppRoutes.pokemonDetailsScreen,
+                            arguments: data),
+                        leading: Image.network(
+                          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$pokemonId.png",
+                          height: 50,
+                          width: 50,
+                        ),
                         title: Text(
                           data.name.toString(),
                         ),

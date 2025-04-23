@@ -8,6 +8,7 @@ import '../../../../data/model/pokemon_list_model.dart';
 class PokemonListController extends GetxController {
   RxBool isLoading = false.obs;
 
+  Rx<Result?> allPokemons = Rx<Result?>(null);
   RxList<Result> allPokemon = <Result>[].obs;
   String? nextUrl;
   String? previousUrl;
