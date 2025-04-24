@@ -14,9 +14,32 @@ class PokemonDetailsController extends GetxController {
     super.onInit();
   }
 
-  RxBool isLoading = false.obs;
   late Result url;
+  PageController pageController = PageController();
+  // RxInt imageIndex = 0.obs;
+  RxBool isLoading = false.obs;
   Rx<PokemonDetails?> details = Rx<PokemonDetails?>(null);
+  RxList imagesList = [].obs;
+
+  void nextImage() {
+    pageController.animateToPage(
+      pageController.page!.toInt() + 1,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.ease,
+    );
+  }
+
+  void previousImage() {
+    pageController.animateToPage(
+      pageController.page!.toInt() - 1,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.ease,
+    );
+  }
+
+  void addImageIntoList(String? url) {
+    if (url != null) imagesList.add(url);
+  }
 
   void fetchPokemonDetails() async {
     try {
@@ -25,6 +48,16 @@ class PokemonDetailsController extends GetxController {
       if (response.statusCode == 200) {
         details.value = PokemonDetails.fromJson(response.data);
         print("@@@details.value: ${details.value}");
+        final other = details.value!.sprites!.other;
+
+        // addImageIntoList(other?.dreamWorld?.frontDefault);
+        addImageIntoList(other?.dreamWorld?.frontFemale);
+        addImageIntoList(other?.home?.frontDefault);
+        addImageIntoList(other?.home?.frontFemale);
+        addImageIntoList(other?.home?.frontShiny);
+        addImageIntoList(other?.home?.frontShinyFemale);
+        addImageIntoList(other?.officialArtwork?.frontDefault);
+        addImageIntoList(other?.officialArtwork?.frontShiny);
       } else {
         print("@@@Status Code: ${response.statusCode}");
       }
