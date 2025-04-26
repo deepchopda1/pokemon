@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pokemon/presentation/app/app_routes.dart';
 
 import 'controller/pokemon_details_controller.dart';
 
@@ -23,7 +24,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
           () => Text(
             controller.isLoading.value
                 ? ""
-                : "${controller.details.value!.name} #${controller.details.value!.id}",
+                : "${controller.details.value!.name}",
             style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
           ),
         ),
@@ -106,38 +107,34 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                           Wrap(
                             spacing: 08,
                             children: controller.details.value!.types!
-                                .map((type) => Chip(
-                                    label: Text(type.type!.name.toString())))
+                                .map(
+                                  (type) => InkWell(
+                                    onTap: () => Get.toNamed(
+                                        AppRoutes.typeDetailsScreen,
+                                        arguments: type.type!.url),
+                                    child: Chip(
+                                        label:
+                                            Text(type.type!.name.toString())),
+                                  ),
+                                )
                                 .toList(),
                           ),
-                          // SizedBox(height: 15),
-                          // Align(
-                          //   alignment: Alignment.centerLeft,
-                          //   child: const Text("Moves",
-                          //       style: TextStyle(
-                          //           fontSize: 18, fontWeight: FontWeight.bold)),
-                          // ),
-                          // const SizedBox(height: 8),
-                          // ...controller.details.value!.moves!.map(
-                          //   (move) => ListTile(
-                          //     contentPadding: EdgeInsets.zero,
-                          //     leading: const Icon(Icons.sports_martial_arts),
-                          //     title: Text("${move.move!.name}"),
-                          //   ),
-                          // ),
                           SizedBox(height: 15),
                           Text(
                             "Abilities",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 18),
                           ),
-                          ...controller.details.value!.abilities!
-                              .map((ability) => ListTile(
-                                    contentPadding: EdgeInsets.zero,
-                                    leading: Icon(Icons.bolt),
-                                    title:
-                                        Text(ability.ability!.name.toString()),
-                                  )),
+                          ...controller.details.value!.abilities!.map(
+                            (ability) => ListTile(
+                              onTap: () => Get.toNamed(
+                                  AppRoutes.abilityDetailsScreen,
+                                  arguments: ability.ability!.url),
+                              contentPadding: EdgeInsets.zero,
+                              leading: Icon(Icons.bolt),
+                              title: Text(ability.ability!.name.toString()),
+                            ),
+                          ),
                           SizedBox(height: 15),
                           Text(
                             "Stats",

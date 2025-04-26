@@ -3,42 +3,44 @@ import 'package:get/get.dart';
 import 'package:pokemon/data/services/api_client.dart';
 import 'package:pokemon/data/services/api_endpoint_url.dart';
 
-import '../../../../data/model/pokemon_list_model.dart';
+import '../../../../data/model/ability_model.dart';
 
-class PokemonListController extends GetxController {
+class AbilityController extends GetxController {
   @override
   void onInit() {
-    // TODO: implement onInit
+    fetchAbility();
     super.onInit();
-    fetchPokemonList();
   }
 
   RxBool isLoading = false.obs;
-  Rx<PokemonList?> pokemonList = Rx<PokemonList?>(null);
-  // Rx<PokemonList?> allPokemon = Rx<PokemonList?>(null);
-  RxList<Result> allPokemon = <Result>[].obs;
+
+  RxList<Result> abilityList = <Result>[].obs;
   String? nextUrl;
   String? previousUrl;
 
-  void fetchPokemonList({bool isNextPage = false}) async {
+  void fetchAbility({bool isNextPage = false}) async {
+    isLoading.value = true;
     try {
-      isLoading.value = true;
-
       final url =
-          isNextPage && nextUrl != null ? nextUrl! : ApiEndpointUrl.pokemonList;
+          isNextPage && nextUrl != null ? nextUrl! : ApiEndpointUrl.ability;
 
       final response = await ApiClient().get(url);
       if (response.statusCode == 200) {
-        pokemonList.value = PokemonList.fromJson(response.data);
+        final data = AbilityList.fromJson(response.data);
 
-        nextUrl = pokemonList.value!.next;
-        previousUrl = pokemonList.value!.previous;
+        nextUrl = data.next;
+        previousUrl = data.previous;
 
         if (isNextPage) {
-          allPokemon.addAll(pokemonList.value!.results!);
+          abilityList.addAll(data.results!);
         } else {
-          allPokemon.value = pokemonList.value!.results!;
+          abilityList.value = data.results!;
         }
+        // isNextPage
+        //     ? abilityList.addAll(data.results!)
+        //     : abilityList.value = data.results!;
+
+        print("@@@abilityList.length: ${abilityList.length}");
       } else {
         print("@@@Status Code: ${response.statusCode}");
       }

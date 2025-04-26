@@ -72,7 +72,9 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
                     children: [
                       ListTile(
                         onTap: () => Get.toNamed(AppRoutes.pokemonDetailsScreen,
-                            arguments: data),
+                            arguments: controller
+                                .pokemonList.value!.results![index].url),
+                        // arguments: data),
                         leading: Image.network(
                           "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$pokemonId.png",
                           height: 50,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../abilitys/ability_screen.dart';
 import '../pokemon_list/pokemon_list_screen.dart';
 import '../pokemon_moves/pokemon_moves_screen.dart';
 
@@ -19,6 +20,7 @@ class _BottomTabBarState extends State<BottomTabBar> {
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(icon: Text(""), label: "Pokemon"),
+          BottomNavigationBarItem(icon: Text(""), label: "Ability"),
           BottomNavigationBarItem(icon: Text(""), label: "Move"),
         ],
         onTap: (value) => selectTab.value = value,
@@ -28,6 +30,8 @@ class _BottomTabBarState extends State<BottomTabBar> {
           switch (selectTab.value) {
             case 0:
               return PokemonListScreen();
+            case 1:
+              return AbilityScreen();
             default:
               return PokemonMovesScreen();
           }

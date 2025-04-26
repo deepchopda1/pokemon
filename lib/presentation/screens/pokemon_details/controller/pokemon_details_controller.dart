@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:pokemon/data/services/api_client.dart';
 
 import '../../../../data/model/pokemon_details_model.dart';
-import '../../../../data/model/pokemon_list_model.dart';
 
 class PokemonDetailsController extends GetxController {
   @override
@@ -14,28 +13,11 @@ class PokemonDetailsController extends GetxController {
     super.onInit();
   }
 
-  late Result url;
+  late String url;
   PageController pageController = PageController();
-  // RxInt imageIndex = 0.obs;
   RxBool isLoading = false.obs;
   Rx<PokemonDetails?> details = Rx<PokemonDetails?>(null);
   RxList imagesList = [].obs;
-
-  void nextImage() {
-    pageController.animateToPage(
-      pageController.page!.toInt() + 1,
-      duration: Duration(milliseconds: 500),
-      curve: Curves.ease,
-    );
-  }
-
-  void previousImage() {
-    pageController.animateToPage(
-      pageController.page!.toInt() - 1,
-      duration: Duration(milliseconds: 500),
-      curve: Curves.ease,
-    );
-  }
 
   void addImageIntoList(String? url) {
     if (url != null) imagesList.add(url);
@@ -44,13 +26,12 @@ class PokemonDetailsController extends GetxController {
   void fetchPokemonDetails() async {
     try {
       isLoading.value = true;
-      final response = await ApiClient().get("${url.url}");
+      final response = await ApiClient().get(url);
       if (response.statusCode == 200) {
         details.value = PokemonDetails.fromJson(response.data);
         print("@@@details.value: ${details.value}");
         final other = details.value!.sprites!.other;
 
-        // addImageIntoList(other?.dreamWorld?.frontDefault);
         addImageIntoList(other?.dreamWorld?.frontFemale);
         addImageIntoList(other?.home?.frontDefault);
         addImageIntoList(other?.home?.frontFemale);
@@ -72,5 +53,21 @@ class PokemonDetailsController extends GetxController {
     } finally {
       isLoading.value = false;
     }
+  }
+
+  void nextImage() {
+    pageController.animateToPage(
+      pageController.page!.toInt() + 1,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.ease,
+    );
+  }
+
+  void previousImage() {
+    pageController.animateToPage(
+      pageController.page!.toInt() - 1,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.ease,
+    );
   }
 }
