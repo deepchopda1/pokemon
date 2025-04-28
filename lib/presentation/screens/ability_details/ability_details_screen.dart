@@ -51,8 +51,8 @@ class _AbilityDetailsScreenState extends State<AbilityDetailsScreen> {
                     return Text(data.effect.toString());
                   },
                 ),
-                SizedBox(height: 24),
-                Text('Pokémon with this Ability',
+                SizedBox(height: 20),
+                Text('Pokemon with this Ability',
                     style:
                         TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 SizedBox(height: 08),
@@ -63,11 +63,32 @@ class _AbilityDetailsScreenState extends State<AbilityDetailsScreen> {
                   itemBuilder: (context, index) {
                     final data = ability.pokemon![index];
                     return ListTile(
-                      onTap: () {
-                        Get.toNamed(AppRoutes.pokemonDetailsScreen,
-                            arguments: data.pokemon!.url);
-                      },
+                      // onTap: () {
+                      //   Get.toNamed(AppRoutes.pokemonDetailsScreen,
+                      //       arguments: data.pokemon!.url);
+                      // },
                       title: Text(data.pokemon!.name.toString()),
+                      // trailing: Icon(Icons.arrow_forward_ios, size: 15),
+                    );
+                  },
+                ),
+                SizedBox(height: 20),
+                Text('Language',
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                SizedBox(height: 08),
+                ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: ability.names!.length,
+                  itemBuilder: (context, index) {
+                    final data = ability.names![index];
+                    return ListTile(
+                      onTap: () {
+                        Get.toNamed(AppRoutes.languageDetailsScreen,
+                            arguments: data.language!.url);
+                      },
+                      title: Text(data.language!.name.toString()),
                       trailing: Icon(Icons.arrow_forward_ios, size: 15),
                     );
                   },

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pokemon/core/constant/app_strings.dart';
+import 'package:pokemon/presentation/app/app_routes.dart';
 
 import 'controller/type_details_controller.dart';
 
@@ -22,9 +24,10 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
           ),
         );
       }
+      final type = controller.typeList.value!;
       return Scaffold(
         appBar: AppBar(
-          title: Text(controller.typeList.value!.name!.capitalize.toString()),
+          title: Text(type.name!.capitalize.toString()),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -33,13 +36,91 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Damage Relations',
+                  AppString().damageRelations,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 8),
                 _buildDamageRelation(
-                  "Double Damage From",
-                  controller.typeList.value!.damageRelations!.doubleDamageFrom!,
+                  AppString().doubleDamageFrom,
+                  type.damageRelations!.doubleDamageFrom!,
+                ),
+                _buildDamageRelation(
+                  AppString().doubleDamageTo,
+                  type.damageRelations!.doubleDamageTo!,
+                ),
+                _buildDamageRelation(
+                  AppString().halfDamageFrom,
+                  type.damageRelations!.halfDamageFrom!,
+                ),
+                _buildDamageRelation(
+                  AppString().halfDamageTo,
+                  type.damageRelations!.halfDamageTo!,
+                ),
+                SizedBox(height: 15),
+                Text(
+                  AppString().pokemonWithThisType,
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 8),
+                ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: type.pokemon!.length,
+                  itemBuilder: (context, index) {
+                    final data = type.pokemon![index];
+                    return ListTile(
+                      // contentPadding: EdgeInsets.zero,
+                      // onTap: () {
+                      //   Get.toNamed(AppRoutes.languageDetailsScreen,
+                      //       arguments: data.pokemon!.url);
+                      // },
+                      leading: Icon(Icons.catching_pokemon),
+                      title: Text(data.pokemon!.name!.capitalize.toString()),
+                    );
+                  },
+                ),
+                SizedBox(height: 15),
+                Text(
+                  AppString().movesThisType,
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 8),
+                ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: type.moves!.length,
+                  itemBuilder: (context, index) {
+                    final data = type.moves![index];
+                    return ListTile(
+                      leading: Icon(Icons.sports_martial_arts),
+                      title: Text(data.name!.capitalize.toString()),
+                    );
+                  },
+                ),
+                SizedBox(height: 20),
+                Text(
+                  "Language",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: type.names!.length,
+                  itemBuilder: (context, index) {
+                    final data = type.names![index];
+                    return ListTile(
+                      onTap: () {
+                        Get.toNamed(AppRoutes.languageDetailsScreen,
+                            arguments: data.language!.url);
+                      },
+                      leading: Icon(Icons.language),
+                      title: Text(data.name.toString()),
+                      subtitle: Text(
+                        "Language Code: ${data.language!.name!.toUpperCase()}",
+                      ),
+                      trailing: Icon(Icons.arrow_forward_ios_rounded, size: 15),
+                    );
+                  },
                 )
               ],
             ),
@@ -56,9 +137,10 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
         Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
         SizedBox(height: 4),
         Wrap(
+          spacing: 08,
           children: types
               .map((type) => Chip(
-                    label: Text(type.name!.capitalize.toString()),
+                    label: Text(type.name),
                   ))
               .toList(),
         ),
