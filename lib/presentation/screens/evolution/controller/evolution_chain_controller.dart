@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pokemon/data/model/evolution_chain_model.dart';
 import 'package:pokemon/data/services/api_client.dart';
 import 'package:pokemon/data/services/api_endpoint_url.dart';
+
+import '../../../../data/model/evolution_chain_details_model.dart';
 
 class EvolutionChainController extends GetxController {
   @override
@@ -11,26 +12,30 @@ class EvolutionChainController extends GetxController {
     super.onInit();
   }
 
-  final RxBool isLoading = false.obs;
-  final Rx<EvolutionChain?> evolutionChainList = Rx<EvolutionChain?>(null);
+  RxList<Result> evolutionChainItem = <Result>[].obs;
+  Rx<EvolutionChainDetail?> evolutionChainDetails =
+      Rx<EvolutionChainDetail?>(null);
+
+  RxList tempList = [].obs;
+  var isLoading = false.obs;
 
   void fetchEvolutionChain() async {
     isLoading.value = true;
     try {
-      final response = await ApiClient().get(ApiEndpointUrl.evolutionChain);
+      final response = await ApiClient().get(ApiEndpointUrl.evolutionChainItem);
       if (response.statusCode == 200) {
-        evolutionChainList.value = EvolutionChain.fromJson(response.data);
-      } else {
-        print("@@@StatusCode: ${response.statusCode}");
+        evolutionChainItem.value =
+            EvolutionChainItem.fromJson(response.data).results!;
+
+        for (var item in evolutionChainItem) {
+          final url = item.url;
+          final response = await ApiClient().get(url!);
+          final data = EvolutionChainDetail.fromJson(response.data);
+          tempList.add(data.chain!.species!.name);
+        }
       }
     } catch (e) {
-      print("@@@Error: ${e}");
-      Get.snackbar(
-        "Error",
-        "$e",
-        backgroundColor: Colors.red,
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      Get.snackbar('Error', e.toString());
     } finally {
       isLoading.value = false;
     }

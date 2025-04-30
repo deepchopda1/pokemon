@@ -47,7 +47,44 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                             onPageChanged: (value) {},
                             itemBuilder: (context, index) {
                               return Image.network(
-                                  controller.imagesList[index]);
+                                loadingBuilder: (
+                                  BuildContext context,
+                                  Widget child,
+                                  ImageChunkEvent? loadingProgress,
+                                ) {
+                                  if (loadingProgress == null) return child;
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      value:
+                                          loadingProgress.expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes!
+                                              : null,
+                                    ),
+                                  );
+                                },
+                                // loadingBuilder: (BuildContext context,
+                                //     Widget child,
+                                //     ImageChunkEvent? loadingProgress) {
+                                //   if (loadingProgress == null) return child;
+                                //   return Center(
+                                //     child: CircularProgressIndicator(
+                                //       value:
+                                //           loadingProgress.expectedTotalBytes !=
+                                //                   null
+                                //               ? loadingProgress
+                                //                       .cumulativeBytesLoaded /
+                                //                   loadingProgress
+                                //                       .expectedTotalBytes!
+                                //               : null,
+                                //     ),
+                                //   );
+                                // },
+                                controller.imagesList[index],
+                              );
                             },
                           ),
                           Padding(

@@ -5,5 +5,5 @@ class ApiEndpointUrl {
 
   static const String pokemonList = "${baseUrl}pokemon?offset=0&limit=20";
   static const String ability = "${baseUrl}ability?offset=0&limit=20";
-  static const String evolutionChain = "${baseUrl}evolution-chain/1/";
+  static const String evolutionChainItem = "${baseUrl}evolution-chain";
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pokemon/presentation/app/app_routes.dart';
 import 'package:pokemon/presentation/screens/evolution/controller/evolution_chain_controller.dart';
 
 import '../../../data/model/evolution_chain_model.dart';
@@ -28,52 +29,24 @@ class _EvolutionChainScreenState extends State<EvolutionChainScreen> {
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : controller.evolutionChainList.value == null
+            : controller.evolutionChainItem.isEmpty
                 ? Text("No evolution chain found",
                     style: TextStyle(fontWeight: FontWeight.bold))
-                : SingleChildScrollView(
-                    child: buildEvolutionChain(
-                        controller.evolutionChainList.value!.chain),
+                : ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: controller.evolutionChainItem.length,
+                    itemBuilder: (context, index) {
+                      final data = controller.evolutionChainItem[index];
+                      return ListTile(
+                        onTap: () => Get.toNamed(
+                            AppRoutes.evolutionDetailsScreen,
+                            arguments: data.url),
+                        title: Text("${controller.tempList[index]}"),
+                        // subtitle: Text(data.url!),
+                      );
+                    },
                   ),
       ),
     );
   }
-
-  Widget buildEvolutionChain(ChainLink node) {
-    return Column(
-      children: [
-        buildPokemonCard(node.species.name),
-        if (node.evolvesTo.isNotEmpty) ...[
-          const SizedBox(height: 8),
-          const Icon(Icons.arrow_downward, size: 32),
-          const SizedBox(height: 8),
-          ...node.evolvesTo.map(buildEvolutionChain).toList(),
-        ]
-      ],
-    );
-  }
-
-  Widget buildPokemonCard(String name) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      elevation: 4,
-      child: ListTile(
-        contentPadding:
-            const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-        leading: Image.network(
-          "https://img.pokemondb.net/sprites/home/normal/$name.png",
-          height: 60,
-          width: 60,
-          errorBuilder: (_, __, ___) =>
-              const Icon(Icons.catching_pokemon, size: 50),
-        ),
-        title: Text(
-          capitalize(name),
-          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-      ),
-    );
-  }
-
-  String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
 }
