@@ -66,23 +66,6 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                                     ),
                                   );
                                 },
-                                // loadingBuilder: (BuildContext context,
-                                //     Widget child,
-                                //     ImageChunkEvent? loadingProgress) {
-                                //   if (loadingProgress == null) return child;
-                                //   return Center(
-                                //     child: CircularProgressIndicator(
-                                //       value:
-                                //           loadingProgress.expectedTotalBytes !=
-                                //                   null
-                                //               ? loadingProgress
-                                //                       .cumulativeBytesLoaded /
-                                //                   loadingProgress
-                                //                       .expectedTotalBytes!
-                                //               : null,
-                                //     ),
-                                //   );
-                                // },
                                 controller.imagesList[index],
                               );
                             },
@@ -171,6 +154,28 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                               leading: Icon(Icons.bolt),
                               title: Text(ability.ability!.name.toString()),
                             ),
+                          ),
+                          SizedBox(height: 15),
+                          Text(
+                            "Moves",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
+                          SizedBox(height: 05),
+                          Wrap(
+                            spacing: 08,
+                            children: controller.details.value!.moves!
+                                .map(
+                                  (type) => InkWell(
+                                    onTap: () => Get.toNamed(
+                                        AppRoutes.typeDetailsScreen,
+                                        arguments: type.move!.url),
+                                    child: Chip(
+                                        label:
+                                            Text(type.move!.name.toString())),
+                                  ),
+                                )
+                                .toList(),
                           ),
                           SizedBox(height: 15),
                           Text(

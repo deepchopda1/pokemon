@@ -1,8 +1,14 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pokemon/firebase_options.dart';
 import 'package:pokemon/presentation/app/app_routes.dart';
+import 'package:pokemon/presentation/helper/firebase_halper.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await FirebaseHelper().initFCM();
   runApp(const MyApp());
 }
 
