@@ -8,7 +8,7 @@ import 'package:pokemon/presentation/helper/firebase_halper.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await FirebaseHelper().initFCM();
+  await FirebaseHelper.initFCM();
   runApp(const MyApp());
 }
 

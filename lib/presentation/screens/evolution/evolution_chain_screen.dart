@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:pokemon/presentation/app/app_routes.dart';
 import 'package:pokemon/presentation/screens/evolution/controller/evolution_chain_controller.dart';
 
-import '../../../data/model/evolution_chain_model.dart';
-
 class EvolutionChainScreen extends StatefulWidget {
   const EvolutionChainScreen({super.key});
 
