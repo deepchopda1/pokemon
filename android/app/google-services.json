@@ -7,25 +7,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:488491633368:android:dfb213a5eb42fda195a5ad",
-        "android_client_info": {
-          "package_name": "com.app.pokemon"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBRmm1l9vUSuAPMwWbIoAFlsq2rjZdV4iM"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:488491633368:android:3b6713665a3c444b95a5ad",
         "android_client_info": {
           "package_name": "com.application.pokemon"

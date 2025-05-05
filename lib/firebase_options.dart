@@ -17,29 +17,17 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -54,9 +42,48 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBRmm1l9vUSuAPMwWbIoAFlsq2rjZdV4iM',
-    appId: '1:488491633368:android:dfb213a5eb42fda195a5ad',
+    appId: '1:488491633368:android:3b6713665a3c444b95a5ad',
     messagingSenderId: '488491633368',
     projectId: 'pokemon-acf40',
     storageBucket: 'pokemon-acf40.firebasestorage.app',
   );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyAFrlKLik1iJrIyhe7-bRQa6N719an_LlQ',
+    appId: '1:488491633368:web:fbe19879fc16f89095a5ad',
+    messagingSenderId: '488491633368',
+    projectId: 'pokemon-acf40',
+    authDomain: 'pokemon-acf40.firebaseapp.com',
+    storageBucket: 'pokemon-acf40.firebasestorage.app',
+    measurementId: 'G-C4M700C32C',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyBPNaVBezzvcUq41_8ITl9zHEMJ69r-Lvw',
+    appId: '1:488491633368:ios:fc4e8c94a1f83c2b95a5ad',
+    messagingSenderId: '488491633368',
+    projectId: 'pokemon-acf40',
+    storageBucket: 'pokemon-acf40.firebasestorage.app',
+    iosBundleId: 'com.app.pokemon',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyBPNaVBezzvcUq41_8ITl9zHEMJ69r-Lvw',
+    appId: '1:488491633368:ios:fc4e8c94a1f83c2b95a5ad',
+    messagingSenderId: '488491633368',
+    projectId: 'pokemon-acf40',
+    storageBucket: 'pokemon-acf40.firebasestorage.app',
+    iosBundleId: 'com.app.pokemon',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyAFrlKLik1iJrIyhe7-bRQa6N719an_LlQ',
+    appId: '1:488491633368:web:b3a8867700c20abc95a5ad',
+    messagingSenderId: '488491633368',
+    projectId: 'pokemon-acf40',
+    authDomain: 'pokemon-acf40.firebaseapp.com',
+    storageBucket: 'pokemon-acf40.firebasestorage.app',
+    measurementId: 'G-9QVWBK8B99',
+  );
+
 }

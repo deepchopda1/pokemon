@@ -29,7 +29,7 @@ class FirebaseHelper {
 
   static Future<void> _setupLocalNotifications() async {
     const AndroidInitializationSettings androidSettings =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+        AndroidInitializationSettings('@drawable/ic_notification_logo');
 
     const InitializationSettings initSettings =
         InitializationSettings(android: androidSettings);
@@ -46,10 +46,10 @@ class FirebaseHelper {
           AndroidNotificationDetails(
         'channel_id',
         'channel_name',
-        // icon: 'launcher_icon',
         channelDescription: 'channel_description',
         importance: Importance.high,
         priority: Priority.high,
+        playSound: true,
       );
 
       const NotificationDetails platformDetails =
